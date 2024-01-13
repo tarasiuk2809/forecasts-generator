@@ -1,15 +1,60 @@
-/* Генерация предсказания должна происходить при клике на кнопку «предсказать судьбу» */
+function getPredictionNumber() {
+    const max = 5;
+    return Math.floor(Math.random() * max);
+}
 
-/* Заранее заготовь 3-5 предсказаний и в зависимости от того, как лягут карты судьбы (или что скажет Math.random) показывай их пользователю */
+function generatrePercentage() {
+    const max = 101;
+    return Math.floor(Math.random() * max);
+}
 
-/* Подставляй текст нового предсказания в .current-forecast h1 */
+function makeForecast(currentForecast, currentForecastPer) {
+    let predictionNumber = getPredictionNumber();
+    let predictionText;
+    switch (predictionNumber) {
+        case 0: predictionText = 'Если Вы проявите инициативу, успех не заставит себя ждать.';
+            break;
+        case 1: predictionText = 'Ваши надежды и планы сбудутся сверх всяких ожиданий.';
+            break;
+        case 2: predictionText = 'Иди вперед к своей удаче! И будет сердце пусть горячим!';
+            break;
+        case 3: predictionText = 'Скоро в твоей жизни появится новый верный друг!';
+            break;
+        case 4: predictionText = 'Не оставляйте усилий и получите желаемое';
+            break;
+    }
+    let predictionPercentage = generatrePercentage();
+    currentForecast.textContent = predictionText;
+    currentForecastPer.textContent = predictionPercentage + '%';
+}
 
-/* Показывай процент вероятности, с которым предсказание сбудется — в верстке это .current-forecast p */
+const makePrediction = document.querySelector('.forecast-btn');
+const currentForecast = document.querySelector('.current-forecast h1');
+const currentForecastPer = document.querySelector('.current-forecast p');
+const forecasts = document.querySelector('.forecasts');
+let template = document.querySelector('#forecast-item');
+let h3 = template.content.querySelector('h3');
+let p = template.content.querySelector('p');
 
-/* Данный процент также нужно генерировать автоматически, он может принимать значения от 0 до 100% */
 
-/* Совет: заведи функцию-хелпер, которая будет заниматься только генерацией данных в диапазоне от min до max и используй ее где нужно */
+makePrediction.addEventListener('click', function () {
 
-/* При генерации нового предсказания старое предсказание должно добавляться в начало списка «Мои предсказания» — .forecasts  */
+    if (currentForecast.textContent == '') {
+        makeForecast(currentForecast, currentForecastPer);
+    }
+    else {
 
-/* Для добавления предсказания в список воспользуйся шаблоном forecast-item */
+        h3.textContent = currentForecast.textContent;
+        p.textContent = currentForecastPer.textContent;
+        var clone = template.content.cloneNode(true);
+        forecasts.append(clone);
+        currentForecast.textConten = '';
+        currentForecastPer.textContent = '';
+
+        makeForecast(currentForecast, currentForecastPer);
+    }
+})
+
+
+
+
