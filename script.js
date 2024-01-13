@@ -47,7 +47,7 @@ makePrediction.addEventListener('click', function () {
         h3.textContent = currentForecast.textContent;
         p.textContent = currentForecastPer.textContent;
         var clone = template.content.cloneNode(true);
-        forecasts.append(clone);
+        forecasts.prepend(clone);
         currentForecast.textConten = '';
         currentForecastPer.textContent = '';
 
