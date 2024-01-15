@@ -9,7 +9,7 @@ function generatrePercentage() {
 }
 
 function makeForecast(currentForecast, currentForecastPer) {
-    let predictionNumber = getPredictionNumber();
+    const predictionNumber = getPredictionNumber();
     let predictionText;
     switch (predictionNumber) {
         case 0: predictionText = 'Если Вы проявите инициативу, успех не заставит себя ждать.';
@@ -23,38 +23,35 @@ function makeForecast(currentForecast, currentForecastPer) {
         case 4: predictionText = 'Не оставляйте усилий и получите желаемое';
             break;
     }
-    let predictionPercentage = generatrePercentage();
+    const predictionPercentage = generatrePercentage();
     currentForecast.textContent = predictionText;
     currentForecastPer.textContent = predictionPercentage + '%';
 }
 
-const makePrediction = document.querySelector('.forecast-btn');
-const currentForecast = document.querySelector('.current-forecast h1');
-const currentForecastPer = document.querySelector('.current-forecast p');
-const forecasts = document.querySelector('.forecasts');
-let template = document.querySelector('#forecast-item');
-let h3 = template.content.querySelector('h3');
-let p = template.content.querySelector('p');
-
-
-makePrediction.addEventListener('click', function () {
+function forecastsGenerator(currentForecast,currentForecastPer){
+    const template = document.querySelector('#forecast-item');
+    let forecastsPrediction = template.content.querySelector('h3');
+    let forecastsPercentage = template.content.querySelector('p');
+    const forecasts = document.querySelector('.forecasts');
 
     if (currentForecast.textContent == '') {
         makeForecast(currentForecast, currentForecastPer);
     }
     else {
 
-        h3.textContent = currentForecast.textContent;
-        p.textContent = currentForecastPer.textContent;
-        var clone = template.content.cloneNode(true);
+        forecastsPrediction.textContent = currentForecast.textContent;
+        forecastsPercentage.textContent = currentForecastPer.textContent;
+        const clone = template.content.cloneNode(true);
         forecasts.prepend(clone);
         currentForecast.textConten = '';
         currentForecastPer.textContent = '';
 
         makeForecast(currentForecast, currentForecastPer);
     }
-})
+}
 
+const makePredictionBtn = document.querySelector('.forecast-btn');
+const currentForecast = document.querySelector('.current-forecast h1');
+const currentForecastPer = document.querySelector('.current-forecast p');
 
-
-
+makePredictionBtn.addEventListener('click', () => forecastsGenerator(currentForecast, currentForecastPer));
